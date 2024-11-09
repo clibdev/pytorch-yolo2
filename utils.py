@@ -111,7 +111,7 @@ def convert2cpu_long(gpu_matrix):
     return torch.LongTensor(gpu_matrix.size()).copy_(gpu_matrix)
 
 def get_region_boxes(output, conf_thresh, num_classes, anchors, num_anchors, only_objectness=1, validation=False):
-    anchor_step = len(anchors)/num_anchors
+    anchor_step = int(len(anchors)/num_anchors)
     if output.dim() == 3:
         output = output.unsqueeze(0)
     batch = output.size(0)
@@ -137,7 +137,7 @@ def get_region_boxes(output, conf_thresh, num_classes, anchors, num_anchors, onl
 
     det_confs = torch.sigmoid(output[4])
 
-    cls_confs = torch.nn.Softmax()(Variable(output[5:5+num_classes].transpose(0,1))).data
+    cls_confs = torch.nn.Softmax(dim=1)(Variable(output[5:5+num_classes].transpose(0,1))).data
     cls_max_confs, cls_max_ids = torch.max(cls_confs, 1)
     cls_max_confs = cls_max_confs.view(-1)
     cls_max_ids = cls_max_ids.view(-1)
@@ -314,12 +314,8 @@ def do_detect(model, img, conf_thresh, nms_thresh, use_cuda=1):
     t0 = time.time()
 
     if isinstance(img, Image.Image):
-        width = img.width
-        height = img.height
-        img = torch.ByteTensor(torch.ByteStorage.from_buffer(img.tobytes()))
-        img = img.view(height, width, 3).transpose(0,1).transpose(0,2).contiguous()
-        img = img.view(1, 3, height, width)
-        img = img.float().div(255.0)
+        img = np.array(img)
+        img = torch.from_numpy(img.transpose(2, 0, 1)).float().div(255.0).unsqueeze(0)
     elif type(img) == np.ndarray: # cv2 image
         img = torch.from_numpy(img.transpose(2,0,1)).float().div(255.0).unsqueeze(0)
     else:

@@ -6,3 +6,6 @@
 *.o
 *.so
 backup/
+.idea
+*.weights
+*.onnx

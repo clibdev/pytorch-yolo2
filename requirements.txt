@@ -1,0 +1,6 @@
+torch>=2.5.0
+torchvision>=0.20.0
+opencv-python>=4.10.0
+
+### Optional - ONNX format
+# onnx>=1.17.0
