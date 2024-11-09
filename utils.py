@@ -207,10 +207,10 @@ def plot_boxes_cv2(img, boxes, savename=None, class_names=None, color=None):
     height = img.shape[0]
     for i in range(len(boxes)):
         box = boxes[i]
-        x1 = int(round((box[0] - box[2]/2.0) * width))
-        y1 = int(round((box[1] - box[3]/2.0) * height))
-        x2 = int(round((box[0] + box[2]/2.0) * width))
-        y2 = int(round((box[1] + box[3]/2.0) * height))
+        x1 = int(torch.round((box[0] - box[2]/2.0) * width))
+        y1 = int(torch.round((box[1] - box[3]/2.0) * height))
+        x2 = int(torch.round((box[0] + box[2]/2.0) * width))
+        y2 = int(torch.round((box[1] + box[3]/2.0) * height))
 
         if color:
             rgb = color
@@ -315,7 +315,7 @@ def do_detect(model, img, conf_thresh, nms_thresh, use_cuda=1):
 
     if isinstance(img, Image.Image):
         img = np.array(img)
-        img = torch.from_numpy(img.transpose(2, 0, 1)).float().div(255.0).unsqueeze(0)
+        img = torch.from_numpy(img.transpose(2,0,1)).float().div(255.0).unsqueeze(0)
     elif type(img) == np.ndarray: # cv2 image
         img = torch.from_numpy(img.transpose(2,0,1)).float().div(255.0).unsqueeze(0)
     else:

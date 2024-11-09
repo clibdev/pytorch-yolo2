@@ -10,6 +10,7 @@ Differences between original repository and fork:
   * RuntimeError: output with shape [425, 1024, 1, 1] doesn't match the broadcast shape [425, 1024, 1, 435200].
   * TypeError: conv2d() received an invalid combination of arguments.
   * TypeError: view(): argument 'size' failed to unpack the object.
+  * TypeError: type Tensor doesn't define round method.
   * UserWarning: Implicit dimension choice for softmax has been deprecated.
   * UserWarning: TypedStorage is deprecated.
 
