@@ -1,4 +1,4 @@
-# Fork of [pytorch-yolo2](https://github.com/ayooshkathuria/pytorch-yolo2)
+# Fork of [ayooshkathuria/pytorch-yolo2](https://github.com/ayooshkathuria/pytorch-yolo2)
 
 Differences between original repository and fork:
 
